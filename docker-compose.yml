@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres:9.5-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=blnk
+      - POSTGRES_PASSWORD=blnk100%amazing
+      - POSTGRES_DB=lmsdb
+    ports:
+      - 5432:5432
+    networks:
+      - db_nw
+    hostname: db
+
+  lms-api:
+    build: ./server
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./server:/usr/src/app
+      - ./server/migrations:/usr/src/app/migrations
+    ports:
+      - 8000:8000
+    networks:
+      - db_nw
+    env_file:
+      - ./server/.env.dev
+    depends_on:
+      - db
+
+
+networks:
+  db_nw:
+    driver: bridge
+  
+volumes:
+  postgres_data:
