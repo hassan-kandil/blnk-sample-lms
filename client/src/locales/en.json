@@ -56,6 +56,18 @@
         "password": "Password",
         "password_confirmation": "Password confirmation"
       }
+    },
+    "loans": {
+      "enums": {
+        "loan_type": {
+          "personal": "Personal",
+          "mortgage": "Mortgage",
+          "car finance": "Car Finance",
+          "travel": "Travel",
+          "educational": "Educational"
+        }
+      }
     }
   }
+  
 }

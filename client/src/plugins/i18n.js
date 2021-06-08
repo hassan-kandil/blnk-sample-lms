@@ -25,8 +25,14 @@ import i18n from "@/i18n";
 i18n.setNumberFormat("en", {
   currency: {
     style: "currency",
-    currency: "USD",
+    currency: "EGP",
   },
+  percent: {
+    style: "percent",
+    useGrouping : false,
+    minimumSignificantDigits: 3, 
+    maximumSignificantDigits: 5
+  }
 });
 i18n.setNumberFormat("fr", {
   currency: {
