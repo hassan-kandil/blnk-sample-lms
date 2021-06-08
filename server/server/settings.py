@@ -25,9 +25,9 @@ SECRET_KEY = 'vmt=m#3yqxu^h%*hgyp18wgsrd6y_d^9i6fiam@3kni18_9@=^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+APPEND_SLASH=False
 
-
+ALLOWED_HOSTS=['*']
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,10 +38,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'loans',
-    'rest_framework'
+    'rest_framework',
+    'django_filters',
+    'corsheaders'
 ]
 
-MIDDLEWARE = [
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'drf_link_header_pagination.LinkHeaderPagination',
+    'PAGE_SIZE': 10,
+    'EXCEPTION_HANDLER': 'loans.utils.custom_exception_handler'
+
+}
+
+MIDDLEWARE = [    
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,6 +60,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware'
+]
+
+# CORS_ALLOWED_ORIGINS = [
+#         'http://localhost:8081',
+# ]
+CORS_ORIGIN_ALLOW_ALL=True
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'locale'
 ]
 
 ROOT_URLCONF = 'server.urls'
