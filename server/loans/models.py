@@ -11,14 +11,14 @@ class Loan(models.Model):
     Educational = 5
 
     LOAN_TYPES = [
-        (Personal, 'Personal'),
-        (Mortgage, 'Mortgage'),
-        (Car_Finance, 'Car Finance'),
-        (Travel, 'Travel'),
-        (Educational, 'Educational')
+        ('personal', 'Personal'),
+        ('mortgage', 'Mortgage'),
+        ('car finance', 'Car Finance'),
+        ('travel', 'Travel'),
+        ('educational', 'Educational')
     ]
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     min_value = models.PositiveIntegerField(blank=True, null=True)
@@ -26,7 +26,8 @@ class Loan(models.Model):
     duration = models.PositiveIntegerField()
     annual_interest = models.FloatField()
     min_credit_score = models.IntegerField(blank=True,null=True, validators=[MinValueValidator(400), MaxValueValidator(850)])
-    loan_type = models.PositiveSmallIntegerField(
+    loan_type = models.CharField(
+        max_length=20,
         choices=LOAN_TYPES,
         default=Personal
     )
