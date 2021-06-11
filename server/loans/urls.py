@@ -1,6 +1,8 @@
 from django.db import router
+from django.urls import path, include
+
 from rest_framework import routers
-from .api import LoanViewSet, LoanFundViewSet
+from .api import LoanApplicationListAPI, LoanViewSet, LoanFundViewSet, LoanApplicationAPI
 
 from rest_framework.routers import DefaultRouter
 
@@ -14,4 +16,9 @@ router = CustomDefaultRouter()
 router.register('api/loans', LoanViewSet, 'loans')
 router.register('api/loan-funds', LoanFundViewSet, 'loan-funds')
 
-urlpatterns = router.urls
+
+urlpatterns = [
+    path('api/loan-applications', LoanApplicationListAPI.as_view()),
+    path('api/loan-applications/<int:pk>', LoanApplicationAPI.as_view()),
+    path('', include(router.urls))
+]

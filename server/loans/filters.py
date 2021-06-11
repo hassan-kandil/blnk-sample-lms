@@ -1,6 +1,6 @@
 import django_filters
 
-from .models import Loan
+from .models import *
 
 
 class LoanFilter(django_filters.FilterSet):
@@ -10,3 +10,16 @@ class LoanFilter(django_filters.FilterSet):
         model = Loan
         fields = '__all__'
 
+
+class LoanFundFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = LoanFund
+        fields = '__all__'
+
+
+class LoanApplicationFilter(django_filters.FilterSet):
+    status = django_filters.ChoiceFilter(choices=LoanApplication.STATUS_VALUES)
+    class Meta:
+        model = LoanApplication
+        fields = ['id', 'status']
