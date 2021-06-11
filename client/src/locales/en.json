@@ -29,7 +29,7 @@
   "profile": {
     "account": "Account",
     "password": "Password",
-    "name": "Name",
+    "username": "Username",
     "email": "Email",
     "current_password": "Current password",
     "password_confirmation": "Password confirmation",
@@ -67,7 +67,22 @@
           "educational": "Educational"
         }
       }
+    },
+    "loan-applications": {
+      "enums": {
+        "status": {
+          "pending": "Pending",
+          "missing": "Missing Documents",
+          "rejected": "Rejected",
+          "approved": "Approved"
+        },
+        "profile": {
+          "gender": {
+            "M": "Male",
+            "F": "Female"
+          }
+        }
+      }
     }
   }
-  
 }

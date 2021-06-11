@@ -9,11 +9,11 @@
     </div>
 
     <v-text-field
-      :label="$t('auth.name')"
+      :label="$t('auth.username')"
       prepend-icon="mdi-account"
-      v-model="form.name"
+      v-model="form.username"
       required
-      :error-messages="errorMessages.name"
+      :error-messages="errorMessages.username"
     ></v-text-field>
 
     <v-text-field
@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       form: {
-        name: null,
+        username: null,
         email: null,
         password: null,
         password_confirmation: null,
@@ -80,7 +80,7 @@ export default {
         this.loading = true;
 
         try {
-          await this.$admin.http.post("/register", this.form);
+          await this.$admin.http.post("api/auth/register", this.form);
 
           this.$router.push("/");
         } catch (e) {

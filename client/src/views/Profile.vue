@@ -8,8 +8,8 @@
               <v-row>
                 <v-col>
                   <v-text-field
-                    :label="$t('profile.name')"
-                    v-model="accountForm.name"
+                    :label="$t('profile.username')"
+                    v-model="accountForm.username"
                     required
                     :error-messages="errorMessages.name"
                   ></v-text-field>
@@ -108,9 +108,9 @@ export default {
     user: {
       handler(newVal) {
         if (newVal) {
-          let { name, email } = newVal;
+          let { username, email } = newVal;
           this.accountForm = {
-            name,
+            username,
             email,
           };
         }

@@ -12,7 +12,10 @@ export default {
   data() {
     return {
       fields: [
-        "name",
+        {
+          source: "id",
+          label : "Name"
+        },
         {
           source: "duration",
           label: "Duration (years)",

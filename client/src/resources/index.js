@@ -1,7 +1,8 @@
 export default [
   {
     name : "loans",
-    icon: "mdi-account-cash"
+    icon: "mdi-account-cash",
+    routes: ["list", "edit", "create", "show"]
   },
   {
     name : "loan-funds",
@@ -11,5 +12,9 @@ export default [
     name: "users",
     icon: "mdi-account",
     routes: ["list"],
+  },
+  {
+    name: "loan-applications",
+    icon: "mdi-text-box-multiple"
   }
 ];

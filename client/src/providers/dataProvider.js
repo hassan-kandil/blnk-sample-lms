@@ -22,6 +22,7 @@ export default (axios, baseURL = "/api") => {
    * Add axios interceptors
    */
 
+
   axios.interceptors.request.use((config) => {
     if (config.locale) {
       config.headers.locale = config.locale;
@@ -58,11 +59,16 @@ export default (axios, baseURL = "/api") => {
     [GET_LIST]: async (resource, params) => {
       const { fields, include, pagination, sort, filter } = params;
 
+      if (filter && filter.q) {
+        filter.id = filter.q
+        delete filter.q
+      }
+
       let query = {
         fields,
         include,
         ...pagination,
-        filter,
+        ...filter,
       };
 
       if (sort && sort.length) {
@@ -76,12 +82,14 @@ export default (axios, baseURL = "/api") => {
         });
       }
 
+      console.log(query)
+
       return getResponse(
         axios.get(
           `${baseURL}/${resource}?${qs.stringify(query, {
             arrayFormat: "comma",
           })}`,
-          params
+          query
         )
       ).then(({ data, meta }) => ({
         data,
@@ -121,8 +129,7 @@ export default (axios, baseURL = "/api") => {
     [GET_NODES]: (resource, params) =>
       getResponse(
         axios.get(
-          `${baseURL}/${resource}/nodes/${
-            params.parent ? params.parent.id : ""
+          `${baseURL}/${resource}/nodes/${params.parent ? params.parent.id : ""
           }?${qs.stringify(
             { filter: params.filter },
             { arrayFormat: "comma" }
@@ -137,18 +144,19 @@ export default (axios, baseURL = "/api") => {
         })
       ),
     [CREATE]: (resource, params) => {
-      let data = objectToFormData(params.data);
-
+      // let data = objectToFormData(params.data);
       return getResponse(
-        axios.post(`${baseURL}/${resource}`, data, { locale: params.locale })
+        axios.post(`${baseURL}/${resource}`, params.data, { locale: params.locale })
       );
     },
     [UPDATE]: (resource, params) => {
-      let data = objectToFormData(params.data);
-      data.append("_method", "PUT");
+
+      // let data = objectToFormData(params.data);
+      // data.append("_method", "PUT");
+
 
       return getResponse(
-        axios.post(`${baseURL}/${resource}/${params.id}`, data, {
+        axios.put(`${baseURL}/${resource}/${params.id}`, params.data, {
           locale: params.locale,
         })
       );

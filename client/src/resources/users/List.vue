@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       fields: [
-        { source: "name", sortable: true },
+        { source: "first_name", sortable: true },
         { source: "email", type: "email" },
       ],
       asideTitle: null,

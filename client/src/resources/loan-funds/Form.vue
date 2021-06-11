@@ -1,5 +1,5 @@
 <template>
-  <va-form :item="item" disable-redirect @saved="$emit('saved')">
+  <va-form :id="id" :item="item" disable-redirect @saved="$emit('saved')">
     <v-row justify="center">
       <v-col sm="6">
         <base-material-card>
@@ -12,7 +12,7 @@
           <v-card-text>
             <v-row>
               <va-text-input
-                source="name"
+                source="id"
                 label="Name*"
                 required
               ></va-text-input>
@@ -74,6 +74,6 @@
 
 <script>
 export default {
-  props: ["title", "item"],
+  props: ["id","title", "item"],
 };
 </script>

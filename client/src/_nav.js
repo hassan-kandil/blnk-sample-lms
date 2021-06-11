@@ -9,6 +9,7 @@ export default (i18n, admin) => [
   { divider: true },
   ...admin.getResourceLinks([
     "loans",
+    "loan-applications",
     "loan-funds",
     "users",
 

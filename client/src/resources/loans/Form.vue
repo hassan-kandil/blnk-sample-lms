@@ -1,5 +1,5 @@
 <template>
-  <va-form :item="item" disable-redirect @saved="$emit('saved')">
+  <va-form :id="id" :item="item" disable-redirect @submit="onSubmit" @saved="$emit('saved')">
     <v-row justify="center">
       <v-col sm="6">
         <base-material-card>
@@ -11,11 +11,7 @@
 
           <v-card-text>
             <v-row>
-              <va-text-input
-                source="name"
-                label="Name*"
-                required
-              ></va-text-input>
+              <va-text-input source="id" label="Name*" required></va-text-input>
             </v-row>
             <v-row>
               <va-text-input source="description" multiline></va-text-input>
@@ -91,6 +87,23 @@
 
 <script>
 export default {
-  props: ["title", "item"],
+  props: ["id", "title", "item"],
+  methods: {
+    onSubmit() {
+      console.log("SUBMITTING")
+      const loan = {
+        id: this.id,
+        description: this.description,
+        min_value: this.min_value,
+        max_value: this.max_value,
+        duration: this.duration,
+        annual_interest: this.annual_interest,
+        min_credit_score: this.min_credit_score,
+        loan_type: this.loan_type,
+      };
+      
+      this.$emit("edit-loan", loan);
+    },
+  },
 };
 </script>

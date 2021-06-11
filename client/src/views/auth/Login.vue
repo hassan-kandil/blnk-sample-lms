@@ -11,7 +11,7 @@
       prepend-icon="mdi-account"
       v-model="form.username"
       required
-      :error-messages="errorMessages.email"
+      :error-messages="errorMessages.username"
     ></v-text-field>
 
     <div class="text-right text-body-2">
@@ -26,6 +26,7 @@
       type="password"
       v-model="form.password"
       required
+      :error-messages="errorMessages.password"
     ></v-text-field>
 
 
@@ -68,14 +69,16 @@ export default {
         try {
           await this.login(this.form);
         } catch (e) {
-          if (e.errors) {
+          if (e.errors["password"] || e.errors["username"]) {
             this.errorMessages = e.errors;
             return;
           }
 
-          this.errorMessages = { email: [e.message] };
+          this.errorMessages = { username: e.errors["non_field_errors"] };
         } finally {
           this.loading = false;
+          // router.push(router.currentRoute.query.to || '/')
+
         }
       }
     },
