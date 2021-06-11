@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'loans',
+    'users',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'django_filters',
     'corsheaders'
 ]
@@ -81,7 +83,8 @@ CORS_ALLOW_HEADERS = [
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
-    'locale'
+    'locale',
+    'Refresh'
 ]
 
 ROOT_URLCONF = 'server.urls'
