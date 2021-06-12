@@ -1,8 +1,8 @@
-from .models import Loan, LoanFund, LoanApplication, Amortization
+from .models import Loan, LoanFund, LoanApplication, Amortization, LoanFundApplication
 from rest_framework import viewsets, generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .filters import *
-from .serializers import LoanSerializer, LoanFundSerializer, CreateLoanApplicationSerializer, UpdateLoanApplicationSerializer, AmortizationSerializer
+from .serializers import *
 from rest_framework.response import Response
 from django_filters import rest_framework as filters
 from users.models import User
@@ -93,12 +93,47 @@ class LoanApplicationListAPI(generics.ListCreateAPIView):
     #     else:
     #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class LoanFundApplicationListAPI(generics.ListCreateAPIView):
+    permission_classes = [
+        IsAuthenticated,
+    ]
+    queryset = LoanFundApplication.objects.all().order_by('id')
+    serializer_class = CreateLoanFundApplicationSerializer
+    filterset_class = LoanFundApplicationFilter
+    filter_backends = (filters.DjangoFilterBackend,)
+
+    def list(self, request, *args, **kwargs):
+
+        queryset = self.get_queryset()
+        user = User.objects.get(username=self.request.user)
+
+        if not user.groups.filter(name="admin"):
+            queryset = queryset.filter(user=user.id)
+
+        queryset = self.filter_queryset(queryset)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 class LoanApplicationAPI(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [
         IsAuthenticated,
     ]
     queryset = LoanApplication.objects.all()
     serializer_class = UpdateLoanApplicationSerializer
+
+class LoanFundApplicationAPI(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [
+        IsAuthenticated,
+    ]
+    queryset = LoanFundApplication.objects.all()
+    serializer_class = UpdateLoanFundApplicationSerializer
 
 
 # class LoanApplicationAPI(generics.RetrieveDestroyAPIView):

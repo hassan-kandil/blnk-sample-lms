@@ -1,7 +1,7 @@
 from users.serializers import ProfileSerializer, UserSerializer
 from django.db import models
 from rest_framework import serializers
-from .models import Loan, LoanApplication, LoanFund, Amortization
+from .models import Loan, LoanApplication, LoanFund, Amortization, LoanFundApplication
 from users.models import Profile
 from datetime import timedelta, date
 from dateutil.relativedelta import relativedelta
@@ -131,6 +131,71 @@ class UpdateLoanApplicationSerializer(serializers.ModelSerializer):
             profile, created = Profile.objects.get_or_create(loan=instance, **profile_data)
             if not created:
                 instance.profile = profile
+
+        instance.save()
+        return instance
+
+class CreateLoanFundApplicationSerializer(serializers.ModelSerializer):
+
+    loanfund = LoanFundSerializer(read_only=True)
+    loanfund_id = serializers.PrimaryKeyRelatedField(queryset=LoanFund.objects.all(), source='loanfund')
+    user = UserSerializer(read_only=True)
+    
+    class Meta:
+        model = LoanFundApplication
+        fields = '__all__'
+
+    def _user(self):
+        request = self.context.get('request', None)
+        if request:
+            return request.user
+
+    def create(self, validated_data):
+        loanfund_application = LoanFundApplication.objects.create(user=self._user(),**validated_data)
+
+        ending_balance= loanfund_application.amount
+        for per in range(1,(loanfund_application.loanfund.duration*loanfund_application.loanfund.installment_frequency)+1):
+            date = loanfund_application.start_date + relativedelta(months=+int(12/loanfund_application.loanfund.installment_frequency*per))
+            # Calculate the interest
+            interest = abs(np.ipmt(loanfund_application.loanfund.annual_interest/loanfund_application.loanfund.installment_frequency, per, 
+                                   loanfund_application.loanfund.duration*loanfund_application.loanfund.installment_frequency, loanfund_application.amount))
+
+            # Calculate the principal
+            principal = abs(np.ppmt(loanfund_application.loanfund.annual_interest/loanfund_application.loanfund.installment_frequency, per, 
+                                   loanfund_application.loanfund.duration*loanfund_application.loanfund.installment_frequency, loanfund_application.amount))
+            
+            print('Per ', per)
+            print('Date ', date)
+            print('Balance ', ending_balance)
+            print('Interest ', interest)
+            print('Principal ', principal)
+
+            ending_balance = ending_balance - principal
+
+            amortization = Amortization.objects.create(loanfund_application=loanfund_application, payment_no=per, date=date, interest=interest, principal=principal, balance=ending_balance)
+
+
+
+        return loanfund_application
+
+
+class UpdateLoanFundApplicationSerializer(serializers.ModelSerializer):
+
+    loanfund_id = serializers.PrimaryKeyRelatedField(queryset=LoanFund.objects.all(), source='loanfund')
+    loanfund = LoanFundSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
+    amortizations = AmortizationSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = LoanFundApplication
+        fields = ('amount', 'loanfund_id', 'notes', 'status', 'user', 'amortizations', 'loanfund', )
+
+
+    def update(self, instance, validated_data):
+        instance.amount = validated_data.get('amount', instance.amount)
+        instance.loanfund_id = validated_data.get('loanfund_id', instance.loanfund_id)
+        instance.notes = validated_data.get( 'notes', instance.notes)
+        instance.status = validated_data.get('status', instance.status)
 
         instance.save()
         return instance

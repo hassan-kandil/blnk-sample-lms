@@ -28,3 +28,9 @@ class LoanApplicationFilter(django_filters.FilterSet):
     class Meta:
         model = LoanApplication
         fields = ['id', 'status']
+
+class LoanFundApplicationFilter(django_filters.FilterSet):
+    status = django_filters.ChoiceFilter(choices=LoanFundApplication.STATUS_VALUES)
+    class Meta:
+        model = LoanFundApplication
+        fields = ['id', 'status']

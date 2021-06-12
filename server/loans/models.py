@@ -56,6 +56,19 @@ class Loan(models.Model):
 
 class LoanFund(models.Model):
 
+    monthly = 12
+    quarterly = 4
+    semi = 2
+    annual = 1
+
+    PAYMENTS = [
+        (monthly, 'Monthly'),
+        (quarterly, 'Quarterly'),
+        (semi, 'Semi-Annual'),
+        (annual, 'Annual'),
+    ]
+
+
     id = models.CharField(max_length=100, primary_key=True)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -63,6 +76,11 @@ class LoanFund(models.Model):
     max_value = models.PositiveIntegerField(blank=True,  null=True)
     duration = models.PositiveIntegerField()
     annual_interest = models.FloatField()
+
+    installment_frequency = models.IntegerField(
+        choices=PAYMENTS,
+        default=12
+    )
 
 
 class LoanApplication(models.Model):
@@ -91,7 +109,6 @@ class LoanApplication(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.SET_NULL,
                                    blank=True, null=True, related_name='loan', related_query_name='loan')
 
-
     monthly_payment = models.DecimalField(
         max_digits=12, decimal_places=2, null=True, blank=True)
 
@@ -110,8 +127,8 @@ class LoanFundApplication(models.Model):
         ('approved', 'Approved')
     ]
 
-    submitted_by = models.CharField(max_length=100,blank=True, null=True)
-    company = models.CharField(max_length=100,blank=True, null=True)
+    submitted_by = models.CharField(max_length=100, blank=True, null=True)
+    company = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     amount = models.PositiveIntegerField()
@@ -126,7 +143,7 @@ class LoanFundApplication(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True,
                              null=True, related_name='fund_applications', related_query_name='fund_application')
     loanfund = models.ForeignKey(LoanFund, on_delete=models.CASCADE, blank=True,
-                             null=True, related_name='applications', related_query_name='application')
+                                 null=True, related_name='applications', related_query_name='application')
 
     monthly_payment = models.DecimalField(
         max_digits=12, decimal_places=2, null=True, blank=True)
@@ -149,4 +166,6 @@ class Amortization(models.Model):
         max_digits=12, decimal_places=2, default=0)
 
     loan_application = models.ForeignKey(LoanApplication, on_delete=models.CASCADE, blank=True, null=True,
-                             related_name='amortizations', related_query_name='amortization')
+                                         related_name='amortizations', related_query_name='amortization')
+    loanfund_application = models.ForeignKey(LoanFundApplication, on_delete=models.CASCADE, blank=True, null=True,
+                                             related_name='amortizations', related_query_name='amortization')

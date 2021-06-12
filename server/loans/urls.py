@@ -2,7 +2,7 @@ from django.db import router
 from django.urls import path, include
 
 from rest_framework import routers
-from .api import LoanApplicationListAPI, LoanViewSet, LoanFundViewSet, LoanApplicationAPI, AmortizationViewSet
+from .api import LoanApplicationListAPI, LoanViewSet, LoanFundViewSet, LoanApplicationAPI, AmortizationViewSet, LoanFundApplicationAPI, LoanFundApplicationListAPI
 
 from rest_framework.routers import DefaultRouter
 
@@ -21,5 +21,7 @@ router.register('api/amortizations', AmortizationViewSet, 'amortizations')
 urlpatterns = [
     path('api/loan-applications', LoanApplicationListAPI.as_view()),
     path('api/loan-applications/<int:pk>', LoanApplicationAPI.as_view()),
+    path('api/loan-fund-applications', LoanFundApplicationListAPI.as_view()),
+    path('api/loan-fund-applications/<int:pk>', LoanFundApplicationAPI.as_view()),
     path('', include(router.urls))
 ]
