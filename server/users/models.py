@@ -21,7 +21,7 @@ class Address(models.Model):
 class Profile(models.Model):
     national_id = models.CharField(max_length=14)
     full_official_name = models.CharField(max_length=255)
-    birth_date = models.DateField()
+    birth_date = models.DateField(auto_now_add=True)
     gender = models.CharField(max_length=1)
     profession = models.CharField(max_length=255, blank=True, null=True)
     employer = models.CharField(max_length=255, blank=True, null=True)

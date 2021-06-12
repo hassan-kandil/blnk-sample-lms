@@ -72,7 +72,7 @@ export default (axios, baseURL = "/api") => {
       };
 
       if (sort && sort.length) {
-        query.sort = sort.map((item) => {
+        query.ordering = sort.map((item) => {
           let { by, desc } = item;
 
           if (desc) {
@@ -80,7 +80,9 @@ export default (axios, baseURL = "/api") => {
           }
           return by;
         });
+        query.ordering = query.ordering.toString()
       }
+      console.log( query.sort )
 
       console.log(query)
 

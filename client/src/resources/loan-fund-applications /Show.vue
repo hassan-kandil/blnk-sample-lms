@@ -70,8 +70,8 @@
               <v-row>
                 <v-col>
                   <va-field
-                    source="monthly_payment"
-                    label="Monthy Payment (EGP)"
+                    source="installment"
+                    label="Installment Amount (EGP)"
                     type="number"
                     fomat="currency"
                   ></va-field>

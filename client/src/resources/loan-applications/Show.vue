@@ -17,22 +17,6 @@
               <v-row>
                 <v-col>
                   <va-field
-                    source="profile.full_official_name"
-                    label="Full Legal Name"
-                  ></va-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <va-field
-                    source="profile.national_id"
-                    label="National ID"
-                  ></va-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <va-field
                     source="loan_id"
                     label="Loan"
                     type="reference"
@@ -48,10 +32,55 @@
                     format="currency"
                   ></va-field>
                 </v-col>
+              </v-row>
+              <v-row>
                 <v-col>
                   <va-field source="status" type="select"></va-field>
                 </v-col>
               </v-row>
+              <v-row>
+                <v-col>
+                  <va-field
+                    source="start_date"
+                    label="Loan Start Date"
+                    type="date"
+                    format="short"
+                  ></va-field>
+                </v-col>
+                <v-col>
+                  <va-field
+                    source="loan.installment_frequency"
+                    label="Loan Installment Frequency"
+                    type="select"
+                  ></va-field>
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col>
+                  <va-field
+                    source="profile.full_official_name"
+                    label="Full Legal Name"
+                  ></va-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <va-field
+                    source="profile.national_id"
+                    label="National ID"
+                  ></va-field>
+                </v-col>
+                <v-col>
+                  <va-field
+                    source="profile.birth_date"
+                    label="Birth Date"
+                    type="date"
+                    format="short"
+                  ></va-field>
+                </v-col>
+              </v-row>
+
               <v-row>
                 <v-col>
                   <va-field
@@ -81,6 +110,16 @@
                   <va-field
                     source="profile.monthly_income"
                     label="Monthy Income (EGP)"
+                    type="number"
+                    fomat="currency"
+                  ></va-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <va-field
+                    source="installment"
+                    label="Installment Amount (EGP)"
                     type="number"
                     fomat="currency"
                   ></va-field>

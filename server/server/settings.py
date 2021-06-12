@@ -51,9 +51,7 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'loans.utils.custom_exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'ORDERING_PARAM' : 'sort'
-
+    )
 }
 
 MIDDLEWARE = [    

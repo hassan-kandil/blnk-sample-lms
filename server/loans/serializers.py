@@ -110,7 +110,7 @@ class CreateLoanApplicationSerializer(serializers.ModelSerializer):
             ending_balance = ending_balance - principal
 
             amortization = Amortization.objects.create(
-                loan_application=loan_application, payment_no=per, date=date, interest=interest, principal=principal, balance=ending_balance)
+                loan_application=loan_application, payment_no=per, date=date,payment=loan_application.installment ,interest=interest, principal=principal, balance=ending_balance)
 
         return loan_application
 
@@ -127,7 +127,7 @@ class UpdateLoanApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoanApplication
         fields = ('id', 'amount', 'loan_id', 'notes', 'status',
-                  'profile', 'user', 'amortizations', 'loan')
+                  'profile', 'user', 'amortizations', 'loan', 'start_date')
 
     def update(self, instance, validated_data):
         instance.amount = validated_data.get('amount', instance.amount)
@@ -201,7 +201,7 @@ class CreateLoanFundApplicationSerializer(serializers.ModelSerializer):
             ending_balance = ending_balance - principal
 
             amortization = Amortization.objects.create(
-                loanfund_application=loanfund_application, payment_no=per, date=date, interest=interest, principal=principal, balance=ending_balance)
+                loanfund_application=loanfund_application, payment_no=per, payment=loanfund_application.installment ,date=date, interest=interest, principal=principal, balance=ending_balance)
 
         return loanfund_application
 

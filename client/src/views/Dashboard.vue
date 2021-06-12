@@ -14,9 +14,7 @@
             <v-tooltip bottom>
               <template v-slot:activator="{ attrs, on }">
                 <v-btn v-bind="attrs" color="info" icon v-on="on">
-                  <v-icon color="info">
-                    mdi-refresh
-                  </v-icon>
+                  <v-icon color="info"> mdi-refresh </v-icon>
                 </v-btn>
               </template>
 
@@ -35,21 +33,8 @@
           </template>
 
           <h4 class="card-title font-weight-light mt-2 ml-2">
-            Website Views
+            Forecasted Monthy Profit
           </h4>
-
-          <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            Last Campaign Performance
-          </p>
-
-          <template v-slot:actions>
-            <v-icon class="mr-1" small>
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light"
-              >updated 10 minutes ago</span
-            >
-          </template>
         </base-material-chart-card>
       </v-col>
 
@@ -65,9 +50,7 @@
             <v-tooltip bottom>
               <template v-slot:activator="{ attrs, on }">
                 <v-btn v-bind="attrs" color="info" icon v-on="on">
-                  <v-icon color="info">
-                    mdi-refresh
-                  </v-icon>
+                  <v-icon color="info"> mdi-refresh </v-icon>
                 </v-btn>
               </template>
 
@@ -85,21 +68,15 @@
             </v-tooltip>
           </template>
 
-          <h4 class="card-title font-weight-light mt-2 ml-2">
-            Daily Sales
-          </h4>
+          <h4 class="card-title font-weight-light mt-2 ml-2">Daily Sales</h4>
 
           <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            <v-icon color="green" small>
-              mdi-arrow-up
-            </v-icon>
+            <v-icon color="green" small> mdi-arrow-up </v-icon>
             <span class="green--text">55%</span>&nbsp; increase in today's sales
           </p>
 
           <template v-slot:actions>
-            <v-icon class="mr-1" small>
-              mdi-clock-outline
-            </v-icon>
+            <v-icon class="mr-1" small> mdi-clock-outline </v-icon>
             <span class="caption grey--text font-weight-light"
               >updated 4 minutes ago</span
             >
@@ -119,9 +96,7 @@
             <v-tooltip bottom>
               <template v-slot:activator="{ attrs, on }">
                 <v-btn v-bind="attrs" color="info" icon v-on="on">
-                  <v-icon color="info">
-                    mdi-refresh
-                  </v-icon>
+                  <v-icon color="info"> mdi-refresh </v-icon>
                 </v-btn>
               </template>
 
@@ -148,9 +123,7 @@
           </p>
 
           <template v-slot:actions>
-            <v-icon class="mr-1" small>
-              mdi-clock-outline
-            </v-icon>
+            <v-icon class="mr-1" small> mdi-clock-outline </v-icon>
             <span class="caption grey--text font-weight-light"
               >campaign sent 26 minutes ago</span
             >
@@ -161,54 +134,43 @@
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
           color="info"
-          icon="mdi-twitter"
-          title="Followers"
-          value="+245"
-          sub-icon="mdi-clock"
-          sub-text="Just Updated"
-        />
-      </v-col>
-
-      <v-col cols="12" sm="6" lg="3">
-        <base-material-stats-card
-          color="primary"
-          icon="mdi-poll"
-          title="Website Visits"
-          value="75.521"
-          sub-icon="mdi-tag"
-          sub-text="Tracked from Google Analytics"
-        />
-      </v-col>
-
-      <v-col cols="12" sm="6" lg="3">
-        <base-material-stats-card
-          color="success"
-          icon="mdi-store"
-          title="Revenue"
-          value="$ 34,245"
-          sub-icon="mdi-calendar"
-          sub-text="Last 24 Hours"
+          icon="mdi-text-box-multiple"
+          title="Upcoming Month Total Loan Installments"
+          :value="total_loan_installments"
         />
       </v-col>
 
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
           color="orange"
-          icon="mdi-sofa"
-          title="Bookings"
-          value="184"
-          sub-icon="mdi-alert"
-          sub-icon-color="red"
-          sub-text="Get More Space..."
+          icon="mdi-book-plus-multiple"
+          title="Upcoming Month Total Loan Fund Installments"
+          :value="total_loanfund_installments"
+        />
+      </v-col>
+
+      <v-col cols="12" sm="6" lg="3">
+        <base-material-stats-card
+          color="red"
+          icon="mdi-account-cash"
+          title="Total Loans Given"
+          :value="total_loans"
+        />
+      </v-col>
+
+      <v-col cols="12" sm="6" lg="3">
+        <base-material-stats-card
+          color="success"
+          icon="mdi-cash-plus"
+          title="Total Funds Received"
+          :value="total_funds"
         />
       </v-col>
 
       <v-col cols="12" md="6">
         <base-material-card color="warning" class="px-5 py-3">
           <template v-slot:heading>
-            <div class="display-2 font-weight-light">
-              Employees Stats
-            </div>
+            <div class="display-2 font-weight-light">Employees Stats</div>
 
             <div class="subtitle-1 font-weight-light">
               New employees on 15th September, 2016
@@ -230,25 +192,19 @@
             >
               <span
                 class="subheading font-weight-light mx-3"
-                style="align-self: center;"
+                style="align-self: center"
                 >Tasks:</span
               >
               <v-tab class="mr-3">
-                <v-icon class="mr-2">
-                  mdi-bug
-                </v-icon>
+                <v-icon class="mr-2"> mdi-bug </v-icon>
                 Bugs
               </v-tab>
               <v-tab class="mr-3">
-                <v-icon class="mr-2">
-                  mdi-code-tags
-                </v-icon>
+                <v-icon class="mr-2"> mdi-code-tags </v-icon>
                 Website
               </v-tab>
               <v-tab>
-                <v-icon class="mr-2">
-                  mdi-cloud
-                </v-icon>
+                <v-icon class="mr-2"> mdi-cloud </v-icon>
                 Server
               </v-tab>
             </v-tabs>
@@ -270,12 +226,8 @@
                     </v-col>
 
                     <v-col cols="2" class="text-right">
-                      <v-icon class="mx-1">
-                        mdi-pencil
-                      </v-icon>
-                      <v-icon color="error" class="mx-1">
-                        mdi-close
-                      </v-icon>
+                      <v-icon class="mx-1"> mdi-pencil </v-icon>
+                      <v-icon color="error" class="mx-1"> mdi-close </v-icon>
                     </v-col>
                   </v-row>
                 </template>
@@ -333,11 +285,6 @@ export default {
       emailsSubscriptionChart: {
         data: {
           labels: [
-            "Ja",
-            "Fe",
-            "Ma",
-            "Ap",
-            "Mai",
             "Ju",
             "Jul",
             "Au",
@@ -345,6 +292,11 @@ export default {
             "Oc",
             "No",
             "De",
+            "Ja",
+            "Fe",
+            "Ma",
+            "Ap",
+            "Mai",
           ],
           series: [
             [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
@@ -448,18 +400,15 @@ export default {
       tasks: {
         0: [
           {
-            text:
-              'Sign contract for "What are conference organizers afraid of?"',
+            text: 'Sign contract for "What are conference organizers afraid of?"',
             value: true,
           },
           {
-            text:
-              "Lines From Great Russian Literature? Or E-mails From My Boss?",
+            text: "Lines From Great Russian Literature? Or E-mails From My Boss?",
             value: false,
           },
           {
-            text:
-              "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
+            text: "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
             value: false,
           },
           {
@@ -469,30 +418,25 @@ export default {
         ],
         1: [
           {
-            text:
-              "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
+            text: "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
             value: true,
           },
           {
-            text:
-              'Sign contract for "What are conference organizers afraid of?"',
+            text: 'Sign contract for "What are conference organizers afraid of?"',
             value: false,
           },
         ],
         2: [
           {
-            text:
-              "Lines From Great Russian Literature? Or E-mails From My Boss?",
+            text: "Lines From Great Russian Literature? Or E-mails From My Boss?",
             value: false,
           },
           {
-            text:
-              "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
+            text: "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
             value: true,
           },
           {
-            text:
-              'Sign contract for "What are conference organizers afraid of?"',
+            text: 'Sign contract for "What are conference organizers afraid of?"',
             value: true,
           },
         ],
@@ -502,6 +446,10 @@ export default {
         1: false,
         2: false,
       },
+      total_loans: 0,
+      total_funds: 0,
+      total_loan_installments: 0,
+      total_loanfund_installments: 0,
     };
   },
 
@@ -509,6 +457,29 @@ export default {
     complete(index) {
       this.list[index] = !this.list[index];
     },
+  },
+  async mounted() {
+    try {
+      let response = await this.$admin.http.get("api/profit-stats");
+      let response_totals = await this.$admin.http.get("api/total-stats");
+
+      this.$router.push("/");
+
+      this.emailsSubscriptionChart.data.series = [response.data];
+      this.total_loan_installments =
+        response_totals.data.total_loan_installments;
+      this.total_loanfund_installments =
+        response_totals.data.total_loanfund_installments;
+
+      this.total_loans = response_totals.data.total_loans;
+      this.total_funds = response_totals.data.total_funds;
+    } catch (e) {
+      if (e.errors) {
+        this.errorMessages = e.errors;
+        return;
+      }
+      this.message = e.message;
+    }
   },
 };
 </script>

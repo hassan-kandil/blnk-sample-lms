@@ -109,11 +109,11 @@ class LoanApplication(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.SET_NULL,
                                    blank=True, null=True, related_name='loan', related_query_name='loan')
 
-    monthly_payment = models.DecimalField(
+    installment = models.DecimalField(
         max_digits=12, decimal_places=2, null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        self.monthly_payment = abs(np.pmt(self.loan.annual_interest/self.loan.installment_frequency,
+        self.installment = abs(np.pmt(self.loan.annual_interest/self.loan.installment_frequency,
                                    self.loan.duration*self.loan.installment_frequency, self.amount))
         super(LoanApplication, self).save(*args, **kwargs)
 
@@ -133,6 +133,8 @@ class LoanFundApplication(models.Model):
     start_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     amount = models.PositiveIntegerField()
     notes = models.TextField(blank=True, null=True)
+    installment = models.DecimalField(
+        max_digits=12, decimal_places=2, null=True, blank=True)
 
     status = models.CharField(
         max_length=20,
@@ -145,11 +147,9 @@ class LoanFundApplication(models.Model):
     loanfund = models.ForeignKey(LoanFund, on_delete=models.CASCADE, blank=True,
                                  null=True, related_name='applications', related_query_name='application')
 
-    monthly_payment = models.DecimalField(
-        max_digits=12, decimal_places=2, null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        self.monthly_payment = abs(np.pmt(self.loanfund.annual_interest/self.loanfund.installment_frequency,
+        self.installment = abs(np.pmt(self.loanfund.annual_interest/self.loanfund.installment_frequency,
                                    self.loanfund.duration*self.loanfund.installment_frequency, self.amount))
         super(LoanFundApplication, self).save(*args, **kwargs)
 
@@ -158,6 +158,8 @@ class Amortization(models.Model):
 
     payment_no = models.PositiveIntegerField(default=0)
     date = models.DateTimeField()
+    payment = models.DecimalField(
+        max_digits=12, decimal_places=2, default=0)
     principal = models.DecimalField(
         max_digits=12, decimal_places=2, default=0)
     interest = models.DecimalField(
