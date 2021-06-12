@@ -83,6 +83,16 @@
           }
         }
       }
+    },
+    "loan-fund-applications": {
+      "enums": {
+        "status": {
+          "pending": "Pending",
+          "missing": "Missing Documents",
+          "rejected": "Rejected",
+          "approved": "Approved"
+        }
+      }
     }
   }
 }

@@ -11,6 +11,7 @@ export default (i18n, admin) => [
     "loans",
     "loan-applications",
     "loan-funds",
+    "loan-fund-applications",
     "users",
 
   ]),

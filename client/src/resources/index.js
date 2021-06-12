@@ -18,6 +18,10 @@ export default [
     icon: "mdi-text-box-multiple"
   },
   {
+    name: "loan-fund-applications",
+    icon: "mdi-book-plus-multiple"
+  },
+  {
     name: "amortizations",
     icon: "mdi-text-box-multiple",
     routes: ["list"]

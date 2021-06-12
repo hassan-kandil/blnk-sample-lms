@@ -92,7 +92,7 @@ export default (axios, baseURL = "/api") => {
           query
         )
       ).then(({ data, meta }) => ({
-        data: data.results,
+        data: data.results ? data.results : data,
         total: data.count,
       }));
     },
