@@ -17,6 +17,11 @@ class LoanFundFilter(django_filters.FilterSet):
         model = LoanFund
         fields = '__all__'
 
+class AmortizationFilter(django_filters.FilterSet):
+    class Meta:
+        model = Amortization
+        fields = '__all__'
+
 
 class LoanApplicationFilter(django_filters.FilterSet):
     status = django_filters.ChoiceFilter(choices=LoanApplication.STATUS_VALUES)

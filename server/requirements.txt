@@ -29,3 +29,4 @@ PyYAML==5.4
 django-cors-headers==3.7.0
 djangorestframework-link-header-pagination
 djangorestframework-simplejwt
+numpy==1.19.0

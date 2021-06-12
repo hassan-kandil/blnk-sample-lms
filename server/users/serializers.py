@@ -66,13 +66,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
-    address = AddressSerializer()
+    address = AddressSerializer(allow_null=True, required=False)
     # profile = ProfileSerializer()
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email',
-                  'first_name', 'last_name', 'address')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name','address')
 
     def update(self, instance, validated_data):
         instance.email = validated_data.get('email', instance.email)
@@ -84,10 +83,11 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         address_data = validated_data.get('address')
         # profile_data = validated_data.get('profile')
 
-        address, created = Address.objects.get_or_create(
-            user=instance, **address_data)
-        if not created:
-            instance.address = address
+        if(address_data):
+            address, created = Address.objects.get_or_create(
+                user=instance, **address_data)
+            if not created:
+                instance.address = address
 
         # profile, created = Profile.objects.get_or_create(user=instance, **profile_data)
 
