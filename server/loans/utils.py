@@ -11,8 +11,14 @@ def custom_exception_handler(exc, context):
 
 
     # Now add the HTTP status code to the response.
-    if response is not None:
-        error_data['message'] = "The given data was invalid."
+    print(exc.detail)
+    if response is not None :
+        if isinstance(exc.detail, list):
+            if exc.detail[0] == "Funds are not enough":
+                error_data['message'] = "Funds are not enough."
+        else:
+            error_data['message'] = "The given data was invalid."
+
         error_data['status_code'] = response.status_code 
         error_data['errors'] = response.data
         new_response = Response(error_data,status=response.status_code)

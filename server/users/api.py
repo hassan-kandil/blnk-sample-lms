@@ -4,11 +4,12 @@ from rest_framework import generics, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from .serializers import AddressSerializer, ProfileSerializer, UserSerializer, RegisterSerializer, UserUpdateSerializer, ProfileSerializer, LoginSerializer
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.tokens import RefreshToken
 # from .serializers import MyTokenObtainPairSerializer, MyTokenRefreshSerializer
 from rest_framework import status
+
 
 
 # Register API
@@ -22,6 +23,8 @@ class RegisterAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        customer_group = Group.objects.get(name='customer') 
+        customer_group.user_set.add(user)
         return Response({
             "user": UserSerializer(user, context=self.get_serializer_context()).data
         })
