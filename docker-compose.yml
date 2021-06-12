@@ -31,7 +31,7 @@ services:
       - db
 
   client:
-    container_name: my-app
+    container_name: client
     build: ./client
     volumes:
       - ./client:/app

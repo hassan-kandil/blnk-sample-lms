@@ -101,6 +101,42 @@ class LoanApplication(models.Model):
         super(LoanApplication, self).save(*args, **kwargs)
 
 
+class LoanFundApplication(models.Model):
+
+    STATUS_VALUES = [
+        ('pending', 'Pending Approval'),
+        ('missing', 'Missing Documents'),
+        ('rejected', 'Rejected'),
+        ('approved', 'Approved')
+    ]
+
+    submitted_by = models.CharField(max_length=100,blank=True, null=True)
+    company = models.CharField(max_length=100,blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    start_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    amount = models.PositiveIntegerField()
+    notes = models.TextField(blank=True, null=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_VALUES,
+        default='pending'
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True,
+                             null=True, related_name='fund_applications', related_query_name='fund_application')
+    loanfund = models.ForeignKey(LoanFund, on_delete=models.CASCADE, blank=True,
+                             null=True, related_name='applications', related_query_name='application')
+
+    monthly_payment = models.DecimalField(
+        max_digits=12, decimal_places=2, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.monthly_payment = abs(np.pmt(self.loanfund.annual_interest/self.loanfund.installment_frequency,
+                                   self.loanfund.duration*self.loanfund.installment_frequency, self.amount))
+        super(LoanFundApplication, self).save(*args, **kwargs)
+
+
 class Amortization(models.Model):
 
     payment_no = models.PositiveIntegerField(default=0)
