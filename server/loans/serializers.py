@@ -8,22 +8,22 @@ from dateutil.relativedelta import relativedelta
 import numpy as np
 
 
-# class ChoiceField(serializers.ChoiceField):
+class ChoiceField(serializers.ChoiceField):
 
-    # def to_representation(self, obj):
-    #     if obj == '' and self.allow_blank:
-    #         return obj
-    #     return self._choices[obj]
+    def to_representation(self, obj):
+        if obj == '' and self.allow_blank:
+            return obj
+        return self._choices[obj]
 
-    # def to_internal_value(self, data):
-    #     # To support inserts with the value
-    #     if data == '' and self.allow_blank:
-    #         return ''
+    def to_internal_value(self, data):
+        # To support inserts with the value
+        if data == '' and self.allow_blank:
+            return ''
 
-    #     for key, val in self._choices.items():
-    #         if val == data:
-    #             return key
-    #     self.fail('invalid_choice', input=data)
+        for key, val in self._choices.items():
+            if val == data:
+                return key
+        self.fail('invalid_choice', input=data)
 
 
 class PercentageField(serializers.Field):
@@ -41,6 +41,7 @@ class LoanSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     # loan_type = ChoiceField(choices=Loan.LOAN_TYPES)
+    installment_frequency = ChoiceField(choices=Loan.PAYMENTS)
 
 
 

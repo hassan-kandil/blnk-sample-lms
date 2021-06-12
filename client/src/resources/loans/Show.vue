@@ -42,6 +42,10 @@
                     label="Duration in years"
                   ></va-field>
                   <va-field
+                    source="installment_frequency"
+                    type="select"
+                  ></va-field>
+                  <va-field
                     source="annual_interest"
                     type="number"
                     format="percent"

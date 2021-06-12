@@ -65,6 +65,12 @@
           "car finance": "Car Finance",
           "travel": "Travel",
           "educational": "Educational"
+        },
+        "installment_frequency": {
+          "Annual" : "Annual",
+          "Semi-Annual" : "Semi-Annual",
+          "Quarterly" : "Quarterly",
+          "Monthly" : "Monthly"
         }
       }
     },

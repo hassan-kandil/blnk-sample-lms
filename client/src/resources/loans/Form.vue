@@ -36,6 +36,11 @@
                 ></va-number-input>
               </v-col>
               <v-col sm="6">
+                <va-select-input
+                  source="installment_frequency"
+                ></va-select-input>
+              </v-col>
+              <v-col sm="6">
                 <va-number-input
                   source="annual_interest"
                   label="Annual Interest Rate (%)*"
