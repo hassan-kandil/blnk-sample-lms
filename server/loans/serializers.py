@@ -51,6 +51,7 @@ class LoanFundSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AmortizationSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Amortization
         fields = '__all__'
@@ -115,9 +116,10 @@ class UpdateLoanApplicationSerializer(serializers.ModelSerializer):
 
 
 
+
     class Meta:
         model = LoanApplication
-        fields = ('amount', 'loan_id', 'notes', 'status', 'profile', 'user', 'amortizations', 'loan')
+        fields = ('id','amount', 'loan_id', 'notes', 'status', 'profile', 'user', 'amortizations', 'loan')
 
 
     def update(self, instance, validated_data):
@@ -188,8 +190,8 @@ class UpdateLoanFundApplicationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LoanFundApplication
-        fields = ('amount', 'loanfund_id', 'notes', 'status', 'user', 'amortizations', 'loanfund', )
-
+        # fields = ('id', 'submitted_by','company','amount', 'loanfund_id', 'notes', 'status', 'user', 'amortizations', 'loanfund', )
+        fields = '__all__'
 
     def update(self, instance, validated_data):
         instance.amount = validated_data.get('amount', instance.amount)

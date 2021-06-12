@@ -50,9 +50,25 @@ class LoanFundViewSet(viewsets.ModelViewSet):
     serializer_class = LoanFundSerializer
     filterset_class = LoanFundFilter
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        if (self.request.query_params.get('fields[loan-funds][1]') == 'label'):
+            loanfund_ids = LoanFund.objects.values_list('id', flat=True)
+            return Response(list(loanfund_ids))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class AmortizationViewSet(viewsets.ModelViewSet):
-    queryset = Amortization.objects.all()
+    queryset = Amortization.objects.all().order_by('id')
     persmissions_classes = [IsAuthenticated]
     serializer_class = AmortizationSerializer
     filterset_class = AmortizationFilter
