@@ -92,8 +92,8 @@ export default (axios, baseURL = "/api") => {
           query
         )
       ).then(({ data, meta }) => ({
-        data,
-        total: meta ? meta.total : data.length,
+        data: data.results,
+        total: data.count,
       }));
     },
     [GET_MANY]: (resource, params) => {

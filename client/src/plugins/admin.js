@@ -30,7 +30,7 @@ Vue.use(VuetifyAdmin);
 /**
  * Axios instance
  */
-const baseURL = process.env.VUE_APP_API_URL || "http://localhost:8000/";
+const baseURL = process.env.VUE_APP_API_URL || "http://localhost:8090/";
 
 const http = axios.create({
   baseURL,

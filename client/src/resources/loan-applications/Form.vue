@@ -57,6 +57,14 @@
                   label="Application Status"
                 ></va-select-input>
               </v-col>
+              <v-col sm="6">
+                <va-date-input
+                  v-if="$admin.can(['admin'])"
+                  label="Loan Start Date"
+                  source="start_date"
+                  format="short"
+                ></va-date-input>
+              </v-col>
             </v-row>
             <v-row>
               <v-col sm="6">

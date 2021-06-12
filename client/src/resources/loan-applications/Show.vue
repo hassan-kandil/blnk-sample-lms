@@ -89,7 +89,18 @@
               <va-field source="notes"></va-field>
             </template>
             <template v-slot:amortization>
-              <va-rich-text-field source="amortization"></va-rich-text-field>
+              <va-list
+                resource="amortizations"
+                disable-query-string
+                :items-per-page="10"
+                :filter="{
+                  loan_application: id,
+                }"
+                disable-create
+                disableGlobalSearch
+              >
+                <va-data-table :fields="fields"> </va-data-table>
+              </va-list>
             </template>
           </base-material-tabs-card>
         </v-col>
@@ -100,6 +111,49 @@
 
 <script>
 export default {
-  props: ["title", "item"],
+  props: ["id", "title", "item"],
+  data() {
+    return {
+      fields: [
+        "payment_no",
+        {
+          source: "date",
+          type: "date",
+          label: "Date",
+          sortable: true,
+          attributes: {
+            format: "short",
+          },
+        },
+        {
+          source: "interest",
+          label: "Interest",
+          type: "number",
+          sortable: true,
+          attributes: {
+            format: "currency",
+          },
+        },
+        {
+          source: "principal",
+          label: "Principal",
+          type: "number",
+          sortable: true,
+          attributes: {
+            format: "currency",
+          },
+        },
+        {
+          source: "balance",
+          label: "Ending Balance",
+          type: "number",
+          sortable: true,
+          attributes: {
+            format: "currency",
+          },
+        },
+      ],
+    };
+  },
 };
 </script>

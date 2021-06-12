@@ -16,5 +16,10 @@ export default [
   {
     name: "loan-applications",
     icon: "mdi-text-box-multiple"
+  },
+  {
+    name: "amortizations",
+    icon: "mdi-text-box-multiple",
+    routes: ["list"]
   }
 ];

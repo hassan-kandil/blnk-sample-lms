@@ -108,8 +108,9 @@ export default {
     user: {
       handler(newVal) {
         if (newVal) {
-          let { username, email } = newVal;
+          let { id, username, email } = newVal;
           this.accountForm = {
+            id,
             username,
             email,
           };
