@@ -5,11 +5,7 @@
       <users-form v-else :id="id" :item="item" @saved="onSaved"></users-form>
     </va-aside-layout>
     <base-material-card :icon="resource.icon" :title="title">
-      <va-list
-        ref="list"
-        disable-create-redirect
-        @action="onAction"
-      >
+      <va-list ref="list" disable-create-redirect @action="onAction">
         <va-data-table
           :fields="fields"
           disable-create-redirect
@@ -42,6 +38,9 @@ export default {
     return {
       fields: [
         { source: "first_name", sortable: true },
+        { source: "last_name", sortable: true },
+        { source: "username" },
+
         { source: "email", type: "email" },
       ],
       asideTitle: null,

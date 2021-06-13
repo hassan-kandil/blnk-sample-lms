@@ -1,26 +1,26 @@
 export default [
   {
-    name : "loans",
+    name: "loans",
     icon: "mdi-account-cash",
     routes: ["list", "edit", "create", "show"],
     permissions: [
       "admin",
       { name: "customer", actions: ["list", "show"] }
-  ]
+    ]
   },
   {
-    name : "loan-funds",
+    name: "loan-funds",
     icon: "mdi-cash-plus",
     permissions: [
       "admin",
       { name: "provider", actions: ["list", "show"] }
-  ]
+    ]
   },
   {
     name: "users",
     icon: "mdi-account",
     routes: ["list"],
-    permissions: ["admin"]
+    permissions: [{ name: "admin", actions: ["list", "show", "edit"] }]
   },
   {
     name: "loan-applications",
@@ -28,7 +28,7 @@ export default [
     permissions: [
       "admin",
       { name: "customer", actions: ["list", "show", "create"] }
-  ]
+    ]
   },
   {
     name: "loan-fund-applications",
@@ -36,7 +36,7 @@ export default [
     permissions: [
       "admin",
       { name: "provider", actions: ["list", "show", "create"] }
-  ]
+    ]
   },
   {
     name: "amortizations",

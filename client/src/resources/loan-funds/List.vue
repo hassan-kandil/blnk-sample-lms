@@ -15,16 +15,16 @@ export default {
         "duration",
         { source: "min_value", type: "number" },
         { source: "max_value", type: "number" },
-
       ],
       fields: [
         {
           source: "id",
-          label : "Name"
+          label: "Name",
         },
         {
           source: "duration",
           label: "Duration (years)",
+          sortable: true,
         },
         {
           source: "annual_interest",
@@ -33,16 +33,16 @@ export default {
           sortable: true,
           attributes: {
             format: "percent",
-          }
-        },{
-
+          },
+        },
+        {
           source: "min_value",
           label: "Min Value (EGP)",
           type: "number",
           sortable: true,
           attributes: {
             format: "currency",
-          }
+          },
         },
         {
           source: "max_value",
@@ -51,11 +51,12 @@ export default {
           sortable: true,
           attributes: {
             format: "currency",
-          }
+          },
         },
         {
           source: "created_at",
           type: "date",
+          sortable: true,
         },
       ],
     };

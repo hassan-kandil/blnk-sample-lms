@@ -37,6 +37,7 @@ export default {
         {
           source: "duration",
           label: "Duration (years)",
+          sortable: true,
         },
         {
           source: "annual_interest",
@@ -69,6 +70,7 @@ export default {
         {
           source: "created_at",
           type: "date",
+          sortable: true,
         },
       ],
     };
