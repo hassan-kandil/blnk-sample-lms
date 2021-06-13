@@ -1,6 +1,6 @@
 <template>
   <base-material-card :icon="resource.icon" :title="title">
-    <va-list>
+    <va-list :filters="filters">
       <va-data-table :fields="fields">
         <template v-slot:[`field.loan_type`]="{ value }">
           <v-chip :color="getLoanTypeColor(value.value)" dark>
@@ -17,10 +17,17 @@ export default {
   props: ["resource", "title"],
   data() {
     return {
+      filters: [
+        "duration",
+        { source: "min_value", type: "number" },
+        { source: "max_value", type: "number" },
+
+        { source: "loan_type", type: "select" },
+      ],
       fields: [
         {
           source: "id",
-          label : "Name"
+          label: "Name",
         },
         {
           source: "loan_type",
@@ -38,8 +45,27 @@ export default {
           sortable: true,
           attributes: {
             format: "percent",
-          }
+          },
         },
+        {
+          source: "min_value",
+          label: "Min Value (EGP)",
+          type: "number",
+          sortable: true,
+          attributes: {
+            format: "currency",
+          },
+        },
+        {
+          source: "max_value",
+          label: "Max Value (EGP)",
+          type: "number",
+          sortable: true,
+          attributes: {
+            format: "currency",
+          },
+        },
+
         {
           source: "created_at",
           type: "date",
@@ -48,13 +74,13 @@ export default {
     };
   },
   methods: {
-      getLoanTypeColor (loan_type) {
-        if (loan_type === 'personal') return 'grey'
-        else if (loan_type === 'mortgage') return 'orange'
-        else if (loan_type === 'car finance') return 'red'
-        else if (loan_type === 'travel') return 'blue'
-        else return 'green'
-      },
-    }
+    getLoanTypeColor(loan_type) {
+      if (loan_type === "personal") return "grey";
+      else if (loan_type === "mortgage") return "orange";
+      else if (loan_type === "car finance") return "red";
+      else if (loan_type === "travel") return "blue";
+      else return "green";
+    },
+  },
 };
 </script>

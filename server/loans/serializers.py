@@ -127,7 +127,7 @@ class UpdateLoanApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoanApplication
         fields = ('id', 'amount', 'loan_id', 'notes', 'status',
-                  'profile', 'user', 'amortizations', 'loan', 'start_date')
+                  'profile', 'user', 'amortizations', 'loan', 'start_date', 'installment')
 
     def update(self, instance, validated_data):
         instance.amount = validated_data.get('amount', instance.amount)

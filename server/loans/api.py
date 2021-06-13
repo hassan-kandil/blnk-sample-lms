@@ -206,10 +206,12 @@ class ProfitListAPI(generics.ListAPIView):
         list_months_profit = []
 
         while current < future:
-            loan_amortization_totals = Amortization.objects.filter(date__year=current.year, date__month=current.month).exclude(
+            loan_amortization_totals = Amortization.objects.filter(
+                loan_application__status="approved").filter(date__year=current.year, date__month=current.month).exclude(
                 loan_application__isnull=True).aggregate(Sum('payment'))
             loan_total_month_installments = loan_amortization_totals['payment__sum'] or 0
-            loanfund_amortization_totals = Amortization.objects.filter(date__year=current.year, date__month=current.month).exclude(
+            loanfund_amortization_totals = Amortization.objects.filter(
+                loanfund_application__status="approved").filter(date__year=current.year, date__month=current.month).exclude(
                 loanfund_application__isnull=True).aggregate(Sum('payment'))
             loanfund_total_month_installments = loanfund_amortization_totals['payment__sum'] or 0
 
@@ -236,18 +238,18 @@ class TotalStatsAPI(generics.ListAPIView):
 
         current = datetime.now().date() + relativedelta(month=+1)
         loan_amortization_totals = Amortization.objects.filter(date__year=current.year, date__month=current.month).exclude(
-                loan_application__isnull=True).aggregate(Sum('payment'))
+            loan_application__isnull=True).aggregate(Sum('payment'))
         loan_total_month_installments = loan_amortization_totals['payment__sum'] or 0
 
         loanfund_amortization_totals = Amortization.objects.filter(date__year=current.year, date__month=current.month).exclude(
-                loanfund_application__isnull=True).aggregate(Sum('payment'))
+            loanfund_application__isnull=True).aggregate(Sum('payment'))
         loanfund_total_month_installments = loanfund_amortization_totals['payment__sum'] or 0
 
         return Response({
-            "total_loans" : "EGP{:,}".format(total_loans),
-            "total_funds" : "EGP{:,}".format(total_funds),
-            "total_loan_installments" : "EGP{:,}".format(loan_total_month_installments),
-            "total_loanfund_installments" : "EGP{:,}".format(loanfund_total_month_installments)
+            "total_loans": "EGP{:,}".format(total_loans),
+            "total_funds": "EGP{:,}".format(total_funds),
+            "total_loan_installments": "EGP{:,}".format(loan_total_month_installments),
+            "total_loanfund_installments": "EGP{:,}".format(loanfund_total_month_installments)
         })
 
 

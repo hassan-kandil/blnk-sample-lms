@@ -1,6 +1,6 @@
 <template>
   <base-material-card :icon="resource.icon" :title="title">
-    <va-list>
+    <va-list :filters="filters">
       <va-data-table :fields="fields"> </va-data-table>
     </va-list>
   </base-material-card>
@@ -11,6 +11,12 @@ export default {
   props: ["resource", "title"],
   data() {
     return {
+      filters: [
+        "duration",
+        { source: "min_value", type: "number" },
+        { source: "max_value", type: "number" },
+
+      ],
       fields: [
         {
           source: "id",
@@ -27,6 +33,24 @@ export default {
           sortable: true,
           attributes: {
             format: "percent",
+          }
+        },{
+
+          source: "min_value",
+          label: "Min Value (EGP)",
+          type: "number",
+          sortable: true,
+          attributes: {
+            format: "currency",
+          }
+        },
+        {
+          source: "max_value",
+          label: "Max Value (EGP)",
+          type: "number",
+          sortable: true,
+          attributes: {
+            format: "currency",
           }
         },
         {

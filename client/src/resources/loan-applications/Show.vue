@@ -37,6 +37,16 @@
                 <v-col>
                   <va-field source="status" type="select"></va-field>
                 </v-col>
+
+                <v-col>
+                  <va-field
+                    source="installment"
+                    label="Installment Amount (EGP)"
+                    type="number"
+                    fomat="currency"
+                  ></va-field>
+                </v-col>
+                
               </v-row>
               <v-row>
                 <v-col>
@@ -115,16 +125,7 @@
                   ></va-field>
                 </v-col>
               </v-row>
-              <v-row>
-                <v-col>
-                  <va-field
-                    source="installment"
-                    label="Installment Amount (EGP)"
-                    type="number"
-                    fomat="currency"
-                  ></va-field>
-                </v-col>
-              </v-row>
+
               <va-field source="notes"></va-field>
             </template>
             <template v-slot:amortization>

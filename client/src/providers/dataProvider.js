@@ -59,17 +59,26 @@ export default (axios, baseURL = "/api") => {
     [GET_LIST]: async (resource, params) => {
       const { fields, include, pagination, sort, filter } = params;
 
+
       if (filter && filter.q) {
         filter.id = filter.q
         delete filter.q
       }
 
+
       let query = {
         fields,
         include,
         ...pagination,
-        ...filter,
       };
+
+      for (var key in filter) {
+        query[key] = filter[key]
+
+      }
+
+
+
 
       if (sort && sort.length) {
         query.ordering = sort.map((item) => {
@@ -82,7 +91,7 @@ export default (axios, baseURL = "/api") => {
         });
         query.ordering = query.ordering.toString()
       }
-      console.log( query.sort )
+      console.log(query.sort)
 
       console.log(query)
 
