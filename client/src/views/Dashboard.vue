@@ -1,45 +1,47 @@
 <template>
   <div>
+    <v-container class="full-height" fluid>
+      <v-row dense>
+        <v-col cols="12" lg="12">
+          <base-material-chart-card
+            :data="emailsSubscriptionChart.data"
+            :options="emailsSubscriptionChart.options"
+            :responsive-options="emailsSubscriptionChart.responsiveOptions"
+            color="#E91E63"
+            hover-reveal
+            type="Bar"
+          >
+            <template v-slot:reveal-actions>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ attrs, on }">
+                  <v-btn v-bind="attrs" color="info" icon v-on="on">
+                    <v-icon color="info"> mdi-refresh </v-icon>
+                  </v-btn>
+                </template>
+
+                <span>Refresh</span>
+              </v-tooltip>
+
+              <v-tooltip bottom>
+                <template v-slot:activator="{ attrs, on }">
+                  <v-btn v-bind="attrs" light icon v-on="on">
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                </template>
+
+                <span>Change Date</span>
+              </v-tooltip>
+            </template>
+
+            <h4 class="card-title font-weight-light mt-2 ml-2">
+              Forecasted Monthly Profit
+            </h4>
+          </base-material-chart-card>
+        </v-col>
+      </v-row>
+    </v-container>
     <v-row>
-      <v-col cols="12" lg="4">
-        <base-material-chart-card
-          :data="emailsSubscriptionChart.data"
-          :options="emailsSubscriptionChart.options"
-          :responsive-options="emailsSubscriptionChart.responsiveOptions"
-          color="#E91E63"
-          hover-reveal
-          type="Bar"
-        >
-          <template v-slot:reveal-actions>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ attrs, on }">
-                <v-btn v-bind="attrs" color="info" icon v-on="on">
-                  <v-icon color="info"> mdi-refresh </v-icon>
-                </v-btn>
-              </template>
-
-              <span>Refresh</span>
-            </v-tooltip>
-
-            <v-tooltip bottom>
-              <template v-slot:activator="{ attrs, on }">
-                <v-btn v-bind="attrs" light icon v-on="on">
-                  <v-icon>mdi-pencil</v-icon>
-                </v-btn>
-              </template>
-
-              <span>Change Date</span>
-            </v-tooltip>
-          </template>
-
-          <h4 class="card-title font-weight-light mt-2 ml-2">
-            Forecasted Monthly Profit
-          </h4>
-        </base-material-chart-card>
-      </v-col>
-
-
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="9" lg="6">
         <base-material-stats-card
           color="info"
           icon="mdi-text-box-multiple"
@@ -48,7 +50,7 @@
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="9" lg="6">
         <base-material-stats-card
           color="orange"
           icon="mdi-book-plus-multiple"
@@ -56,8 +58,9 @@
           :value="total_loanfund_installments"
         />
       </v-col>
-
-      <v-col cols="12" sm="6" lg="3">
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="9" lg="6">
         <base-material-stats-card
           color="red"
           icon="mdi-account-cash"
@@ -66,7 +69,7 @@
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="9" lg="6">
         <base-material-stats-card
           color="success"
           icon="mdi-cash-plus"
@@ -74,7 +77,6 @@
           :value="total_funds"
         />
       </v-col>
-
     </v-row>
   </div>
 </template>
@@ -98,7 +100,7 @@ export default {
             top: 0,
             right: 0,
             bottom: 0,
-            left: 0,
+            left: 10,
           },
         },
       },
@@ -143,10 +145,10 @@ export default {
         },
         options: {
           axisX: {
-            showGrid: false,
+            showGrid: true,
           },
           low: 0,
-          high: 1000,
+          high: 10000,
           chartPadding: {
             top: 0,
             right: 5,

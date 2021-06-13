@@ -102,7 +102,6 @@
                 <va-text-input
                   source="profile.employer"
                   label="Employer"
-                  required
                 ></va-text-input>
               </v-col>
             </v-row>
@@ -116,6 +115,7 @@
                   :step="1000"
                   :min="1000"
                   :max="100000000000000"
+                  required
                 ></va-number-input>
               </v-row>
             </v-col>

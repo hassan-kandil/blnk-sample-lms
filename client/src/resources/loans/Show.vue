@@ -6,7 +6,6 @@
           <base-material-tabs-card
             :tabs="[
               { id: 'attributes', label: 'attributes' ,icon: 'mdi-eye' },
-              { id: 'amortization', label: 'amortization' ,icon: 'mdi-file-chart-outline' },
             ]"
           >
             <template v-slot:attributes>
@@ -61,9 +60,6 @@
             </v-col>
             </v-row>
               <va-field source="description"></va-field>
-            </template>
-            <template v-slot:amortization>
-              <va-rich-text-field source="amortization"></va-rich-text-field>
             </template>
           </base-material-tabs-card>
         </v-col>

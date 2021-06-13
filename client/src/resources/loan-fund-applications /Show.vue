@@ -65,7 +65,6 @@
                     format="short"
                   ></va-field>
                 </v-col>
-
               </v-row>
               <v-row>
                 <v-col>
@@ -114,6 +113,15 @@ export default {
           sortable: true,
           attributes: {
             format: "short",
+          },
+        },
+        {
+          source: "payment",
+          type: "number",
+          label: "Payment Amount",
+          sortable: true,
+          attributes: {
+            format: "currency",
           },
         },
         {

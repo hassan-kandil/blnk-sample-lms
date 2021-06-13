@@ -1,6 +1,6 @@
 <template>
   <base-material-card :icon="resource.icon" :title="title">
-    <va-list>
+    <va-list :filters="filters">
       <va-data-table :fields="fields">
         <template v-slot:[`field.status`]="{ value }">
           <v-chip :color="getStatusColor(value.value)" dark>
@@ -17,6 +17,23 @@ export default {
   props: ["resource", "title"],
   data() {
     return {
+      filters: [
+        {
+          source: "profile.full_official_name",
+          label: "Applicant Name"
+        },
+        {
+          source: "loan.id",
+          label: "Loan Name",
+          type: "autocomplete",
+          attributes: {
+            optionText: "name",
+            multiple: true,
+            reference: "loans",
+          },
+        },
+        { source: "status", type: "select" },
+      ],
       fields: [
         "id",
         {
@@ -51,18 +68,18 @@ export default {
         },
         {
           source: "status",
-          type: "select"
+          type: "select",
         },
       ],
     };
   },
   methods: {
-      getStatusColor (status) {
-        if (status === 'pending') return 'grey'
-        else if (status === 'missing') return 'orange'
-        else if (status === 'rejected') return 'red'
-        else return 'green'
-      },
+    getStatusColor(status) {
+      if (status === "pending") return "grey";
+      else if (status === "missing") return "orange";
+      else if (status === "rejected") return "red";
+      else return "green";
     },
+  },
 };
 </script>

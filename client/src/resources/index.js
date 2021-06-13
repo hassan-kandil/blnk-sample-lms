@@ -27,7 +27,7 @@ export default [
     icon: "mdi-text-box-multiple",
     permissions: [
       "admin",
-      { name: "customer", actions: ["list", "show", "create", "edit"] }
+      { name: "customer", actions: ["list", "show", "create"] }
   ]
   },
   {
@@ -35,7 +35,7 @@ export default [
     icon: "mdi-book-plus-multiple",
     permissions: [
       "admin",
-      { name: "provider", actions: ["list", "show", "create", "edit"] }
+      { name: "provider", actions: ["list", "show", "create"] }
   ]
   },
   {

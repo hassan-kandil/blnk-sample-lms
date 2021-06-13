@@ -209,6 +209,7 @@ class ProfitListAPI(generics.ListAPIView):
             loan_amortization_totals = Amortization.objects.filter(
                 loan_application__status="approved").filter(date__year=current.year, date__month=current.month).exclude(
                 loan_application__isnull=True).aggregate(Sum('payment'))
+            print (loan_amortization_totals)
             loan_total_month_installments = loan_amortization_totals['payment__sum'] or 0
             loanfund_amortization_totals = Amortization.objects.filter(
                 loanfund_application__status="approved").filter(date__year=current.year, date__month=current.month).exclude(
@@ -236,13 +237,21 @@ class TotalStatsAPI(generics.ListAPIView):
         total_funds = total_funds['amount__sum'] or 0
         total_loans = total_loans['amount__sum'] or 0
 
-        current = datetime.now().date() + relativedelta(month=+1)
-        loan_amortization_totals = Amortization.objects.filter(date__year=current.year, date__month=current.month).exclude(
+        current = datetime.now().date() 
+        current += relativedelta(months=1)
+
+
+        loan_amortization_totals = Amortization.objects.filter(
+            loan_application__status="approved").filter(date__year=current.year, date__month=current.month).exclude(
             loan_application__isnull=True).aggregate(Sum('payment'))
+
         loan_total_month_installments = loan_amortization_totals['payment__sum'] or 0
 
         loanfund_amortization_totals = Amortization.objects.filter(date__year=current.year, date__month=current.month).exclude(
-            loanfund_application__isnull=True).aggregate(Sum('payment'))
+            loanfund_application__isnull=True).filter(
+                loanfund_application__status="approved").aggregate(Sum('payment'))
+
+
         loanfund_total_month_installments = loanfund_amortization_totals['payment__sum'] or 0
 
         return Response({
