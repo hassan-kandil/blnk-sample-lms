@@ -31,7 +31,7 @@
             <v-row>
               <v-col lg="8">
                 <va-autocomplete-input
-                  source="loan_id"
+                  source="loan.id"
                   model="loan_id"
                   label="Loan Name*"
                   reference="loans"

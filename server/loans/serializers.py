@@ -82,7 +82,7 @@ class CreateLoanApplicationSerializer(serializers.ModelSerializer):
             return request.user
 
     def create(self, validated_data):
-        loan_data = validated_data.pop('loan')
+        loan_data = validated_data.get('loan')
 
         if validated_data.get('amount') > loan_data.max_value:
             raise serializers.ValidationError(
@@ -182,7 +182,7 @@ class CreateLoanFundApplicationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
-        loanfund_data = validated_data.pop('loanfund')
+        loanfund_data = validated_data.get('loanfund')
 
         if validated_data.get('amount') > loanfund_data.max_value:
             raise serializers.ValidationError(
