@@ -82,7 +82,17 @@ class CreateLoanApplicationSerializer(serializers.ModelSerializer):
             return request.user
 
     def create(self, validated_data):
-        print(validated_data)
+        loan_data = validated_data.pop('loan')
+
+        if validated_data.get('amount') > loan_data.max_value:
+            raise serializers.ValidationError(
+                detail="Max Loan Amount Exceeded!")
+
+        if validated_data.get('amount') < loan_data.min_value:
+            raise serializers.ValidationError(
+                detail="Loan Amount Below Minimum!")
+
+        
         profile_data = validated_data.pop('profile')
         profile = Profile.objects.create(**profile_data)
         loan_application = LoanApplication.objects.create(
@@ -101,16 +111,10 @@ class CreateLoanApplicationSerializer(serializers.ModelSerializer):
             principal = abs(np.ppmt(loan_application.loan.annual_interest/loan_application.loan.installment_frequency, per,
                                     loan_application.loan.duration*loan_application.loan.installment_frequency, loan_application.amount))
 
-            print('Per ', per)
-            print('Date ', date)
-            print('Balance ', ending_balance)
-            print('Interest ', interest)
-            print('Principal ', principal)
-
             ending_balance = ending_balance - principal
 
             amortization = Amortization.objects.create(
-                loan_application=loan_application, payment_no=per, date=date,payment=loan_application.installment ,interest=interest, principal=principal, balance=ending_balance)
+                loan_application=loan_application, payment_no=per, date=date, payment=loan_application.installment, interest=interest, principal=principal, balance=ending_balance)
 
         return loan_application
 
@@ -147,7 +151,8 @@ class UpdateLoanApplicationSerializer(serializers.ModelSerializer):
             total_loans = total_loans['amount__sum'] or 0
 
             if total_loans + instance.amount > total_funds:
-                raise serializers.ValidationError(detail="Funds are not enough")
+                raise serializers.ValidationError(
+                    detail="Funds are not enough")
 
         if(profile_data):
             profile, created = Profile.objects.get_or_create(
@@ -176,8 +181,27 @@ class CreateLoanFundApplicationSerializer(serializers.ModelSerializer):
             return request.user
 
     def create(self, validated_data):
+
+        loanfund_data = validated_data.pop('loanfund')
+
+        if validated_data.get('amount') > loanfund_data.max_value:
+            raise serializers.ValidationError(
+                detail="Max Loan Amount Exceeded!")
+
+        if validated_data.get('amount') < loanfund_data.min_value:
+            raise serializers.ValidationError(
+                detail="Loan Amount Below Minimum!")
+
         loanfund_application = LoanFundApplication.objects.create(
             user=self._user(), **validated_data)
+
+        if loanfund_application.amount > loanfund_application.loanfund.max_value:
+            raise serializers.ValidationError(
+                detail="Max Loan Amount Exceeded!")
+
+        if loanfund_application.amount < loanfund_application.loanfund.min_value:
+            raise serializers.ValidationError(
+                detail="Loan Amount Below Minimum!")
 
         ending_balance = loanfund_application.amount
         for per in range(1, (loanfund_application.loanfund.duration*loanfund_application.loanfund.installment_frequency)+1):
@@ -192,16 +216,10 @@ class CreateLoanFundApplicationSerializer(serializers.ModelSerializer):
             principal = abs(np.ppmt(loanfund_application.loanfund.annual_interest/loanfund_application.loanfund.installment_frequency, per,
                                     loanfund_application.loanfund.duration*loanfund_application.loanfund.installment_frequency, loanfund_application.amount))
 
-            print('Per ', per)
-            print('Date ', date)
-            print('Balance ', ending_balance)
-            print('Interest ', interest)
-            print('Principal ', principal)
-
             ending_balance = ending_balance - principal
 
             amortization = Amortization.objects.create(
-                loanfund_application=loanfund_application, payment_no=per, payment=loanfund_application.installment ,date=date, interest=interest, principal=principal, balance=ending_balance)
+                loanfund_application=loanfund_application, payment_no=per, payment=loanfund_application.installment, date=date, interest=interest, principal=principal, balance=ending_balance)
 
         return loanfund_application
 
